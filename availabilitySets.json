@@ -1,0 +1,84 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "2017.09.01.0",
+  "parameters": {
+    "name": {
+      "type": "string",
+      "metadata": {
+        "description": "Specifies the name of the availability set."
+      }
+    },
+    "platformUpdateDomainCount": {
+      "type": "int",
+      "defaultValue": 5,
+      "maxValue": 20,
+      "metadata": {
+        "description": "Specifies the number of update domains that are used. If this element is not specified, the default value of 5 is used."
+      }
+    },
+    "platformFaultDomainCount": {
+      "type": "int",
+      "defaultValue": 3,
+      "maxValue": 3,
+      "metadata": {
+        "description": "Specifies the number of fault domains that are used. If this element is not specified, the default value of 3 is used."
+      }
+    },
+    "skuName": {
+      "type": "string",
+      "allowedValues": [
+        "Aligned",
+        "Classic"
+      ],
+      "metadata": {
+        "description": "Specifies whether the availability set is managed or not."
+      }
+    },
+    "tags": {
+      "type": "object",
+      "defaultValue": { },
+      "metadata": {
+        "description": "Specifies the tags that will be assigned to the availability set."
+      }
+    }
+  },
+  "variables": {
+    "comment": {
+      "definition": "https://docs.microsoft.com/en-us/rest/api/compute/availabilitysets/availabilitysets-create"
+    },
+    "availabilitySets": {
+      "name": "[parameters('name')]",
+      "type": "Microsoft.Compute/availabilitySets",
+      "location": "[resourceGroup().location]",
+      "tags": "[parameters('tags')]",
+      "sku": {
+        "name": "[parameters('skuName')]"
+      },
+      "properties": {
+        "platformUpdateDomainCount": "[parameters('platformUpdateDomainCount')]",
+        "platformFaultDomainCount": "[parameters('platformFaultDomainCount')]"
+      }
+    }
+  },
+  "resources": [
+    {
+      "name": "[parameters('name')]",
+      "type": "Microsoft.Compute/availabilitySets",
+      "location": "[resourceGroup().location]",
+      "tags": "[parameters('tags')]",
+      "sku": {
+        "name": "[parameters('skuName')]"
+      },
+      "properties": {
+        "platformUpdateDomainCount": "[parameters('platformUpdateDomainCount')]",
+        "platformFaultDomainCount": "[parameters('platformFaultDomainCount')]"
+      }
+    }
+  ],
+  "outputs": {
+    "availabilitySets": {
+      "type": "object",
+      "value": "[variables('availabilitySets')]"
+    }
+  }
+}
