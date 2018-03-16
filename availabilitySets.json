@@ -36,9 +36,16 @@
     },
     "tags": {
       "type": "object",
-      "defaultValue": { },
+      "defaultValue": {},
       "metadata": {
         "description": "Specifies the tags that will be assigned to the availability set."
+      }
+    },
+    "DependsOn": {
+      "type": "array",
+      "defaultValue": [],
+      "metadata": {
+        "description": "Pass dependencies"
       }
     }
   },
@@ -51,6 +58,7 @@
       "name": "[parameters('name')]",
       "type": "Microsoft.Compute/availabilitySets",
       "location": "[resourceGroup().location]",
+      "dependsOn": "[if(empty(parameters('DependsOn')),json('null'),parameters('DependsOn'))]",
       "tags": "[parameters('tags')]",
       "sku": {
         "name": "[parameters('skuName')]"
@@ -67,6 +75,7 @@
       "name": "[parameters('name')]",
       "type": "Microsoft.Compute/availabilitySets",
       "location": "[resourceGroup().location]",
+      "dependsOn": "[if(empty(parameters('DependsOn')),json('null'),parameters('DependsOn'))]",
       "tags": "[parameters('tags')]",
       "sku": {
         "name": "[parameters('skuName')]"
