@@ -69,23 +69,7 @@
       }
     }
   },
-  "resources": [
-    {
-      "apiVersion": "2017-03-30",
-      "name": "[parameters('name')]",
-      "type": "Microsoft.Compute/availabilitySets",
-      "location": "[resourceGroup().location]",
-      "dependsOn": "[if(empty(parameters('DependsOn')),json('null'),parameters('DependsOn'))]",
-      "tags": "[parameters('tags')]",
-      "sku": {
-        "name": "[parameters('skuName')]"
-      },
-      "properties": {
-        "platformUpdateDomainCount": "[parameters('platformUpdateDomainCount')]",
-        "platformFaultDomainCount": "[parameters('platformFaultDomainCount')]"
-      }
-    }
-  ],
+  "resources": [ ],
   "outputs": {
     "availabilitySets": {
       "type": "object",
